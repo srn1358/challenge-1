@@ -110,13 +110,10 @@ new_loan = {
 # @TODO: Define a new function that will be used to calculate present value.
 #    This function should include parameters for `future_value`, `remaining_months`, and the `annual_discount_rate`
 #    The function should return the `present_value` for the loan.
-# YOUR CODE HERE!
-
-
-# @TODO: Use the function to calculate the present value of the new loan given below.
-#    Use an `annual_discount_rate` of 0.2 for this new loan calculation.
-# YOUR CODE HERE!
-print(f"The present value of the loan is: {present_value}")
+def Present_value(future_value,remaining_month, annual_discount_rate):
+    new_PV =future_value/(1+annual_discount_rate/12)**remaining_month
+    return new_PV
+print(f"The present value of the new loan is {Present_value(1000,12,0.2):.2f}")
 
 
 """Part 4: Conditionally filter lists of loans.
@@ -158,13 +155,15 @@ loans = [
 ]
 
 # @TODO: Create an empty list called `inexpensive_loans`
-# YOUR CODE HERE!
+inexpensive_loans=[]
 
 # @TODO: Loop through all the loans and append any that cost $500 or less to the `inexpensive_loans` list
-# YOUR CODE HERE!
+for loan in loans:
+    if (loan["loan_price"]<=500):
+        inexpensive_loans.append(loan)
 
 # @TODO: Print the `inexpensive_loans` list
-# YOUR CODE HERE!
+print (inexpensive_loans)
 
 
 """Part 5: Save the results.
@@ -189,4 +188,9 @@ output_path = Path("inexpensive_loans.csv")
 
 # @TODO: Use the csv library and `csv.writer` to write the header row
 # and each row of `loan.values()` from the `inexpensive_loans` list.
-# YOUR CODE HERE!
+print ("Writing the output in a CSV file...")
+with open(output_path, "w", newline='') as csvfile:
+    csvwriter=csv.writer(csvfile)
+    csvwriter.writerow(header)
+    for row in inexpensive_loans:
+        csvwriter.writerow(row.values())
